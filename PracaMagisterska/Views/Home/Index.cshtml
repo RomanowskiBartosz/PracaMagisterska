@@ -1,0 +1,112 @@
+﻿@{
+
+    ViewData["Title"] = "Home Page";
+
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<h3> Run tests for db</h3>
+<div>
+    <label for="testType">Choose test to run.</label>
+    <select name="testType" id="testType">
+
+        <option value="0">Select *</option>
+        <option value="1"> Select * with order by </option>
+        <option value="2">Select 2 rows with group by</option>
+        <option value="3">Insert into random values</option>
+        <option value="4">select procedure</option>
+        <option value="5">select order by procedure</option>
+    </select>
+    <label for="numOfTests">Number of tests to run.</label>
+    <input type="number" id="numOfTests" value="1"/>
+    <input type="button" id="runTest" value="Run test"/>
+
+</div>
+<div id="resultsContainer">
+    @ViewData["total"]
+    @model string[]
+    <ul>
+        @if(Model !=null)
+        {
+        @foreach (var row in Model)
+        {
+            <li>@row</li>
+        }
+        }
+    </ul>
+</div>
+@section Scripts{
+    <script>
+
+        $(function () {
+            var num = $("#numOfTests").val();
+            console.log(num);
+            //$("#numOfTests").val()
+            for (let i = 0; i < num; i++) {
+                $("#runTest").click(function () {
+                    $.ajax({
+                        type: "Get",
+                        url: "/Home/RunTest?testType=" + $("#testType").val() + "&numOfTests=" + 1,
+                        success: function (data) {
+                            console.log(data);
+                            // window.location.href = data.returnURL;
+
+                            if (data.arrayOfData != null)
+                                createTableOfResults(data.arrayOfData, data.time);
+                            download(data.csvFile, 'test.csv', 'text/csv;encoding:utf-8');
+                        },
+                        error: function (response) {
+                            console.log(response.responseText);
+                        }
+                    });
+                });
+            }
+        });
+        function createTableOfResults(data, timeElapsed) {
+            let jsString = "<table><th style='text-align: center'> time taken</th> <th style='text-align: center'>Result</th>";
+            for (i in timeElapsed) {
+                jsString += "<tr><td>" + timeElapsed[i] + " ms </td>";
+                jsString += "<td><table>";
+                if (data.count < 50) {
+                    for (j in data) {
+
+                        jsString += "<tr style='text-align: right'><td>" + data[j] + "</td></tr>"
+                    }
+                }
+                jsString += "</table></td></tr>"
+            }
+            jsString += "</table>"
+            $("#resultsContainer").html(jsString);
+        }
+
+
+        // The download function takes a CSV string, the filename and mimeType as parameters
+        // Scroll/look down at the bottom of this snippet to see how download is called
+        var download = function (content, fileName, mimeType) {
+            var a = document.createElement('a');
+            mimeType = mimeType || 'application/octet-stream';
+
+            if (navigator.msSaveBlob) { // IE10
+                navigator.msSaveBlob(new Blob([content], {
+                    type: mimeType
+                }), fileName);
+            } else if (URL && 'download' in a) { //html5 A[download]
+                a.href = URL.createObjectURL(new Blob([content], {
+                    type: mimeType
+                }));
+                a.setAttribute('download', fileName);
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+            }
+        }
+
+     
+    </script>
+}

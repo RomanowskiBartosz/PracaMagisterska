@@ -1,0 +1,42 @@
+﻿@model PracaMagisterska.Models.TS_price_PRICELIST_ACTIONS
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>TS_price_PRICELIST_ACTIONS</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.action_name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.action_name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.shown_before_acceptence)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.shown_before_acceptence)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.shown_on_accept_screen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.shown_on_accept_screen)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.shown_on_general)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.shown_on_general)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.action_id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

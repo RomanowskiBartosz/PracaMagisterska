@@ -64,7 +64,7 @@ namespace PracaMagisterska.Controllers
                 for (int i = 0; i < numOfTests; i++)
                 {
                     Stopwatch stopwatch = Stopwatch.StartNew();
-                    var test = new testHelper();
+                    var test = new testStringHelper();
                     arrayOfData = test.test(this.configuration);
                     stopwatch.Stop();
                     arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
@@ -79,7 +79,7 @@ namespace PracaMagisterska.Controllers
                 for (int i = 0; i < numOfTests; i++)
                 {
                     Stopwatch stopwatch = Stopwatch.StartNew();
-                    var test = new testHelper();
+                    var test = new testStringHelper();
                     arrayOfData = test.TestWithOrderBy(this.configuration);
                     stopwatch.Stop();
                     arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
@@ -94,7 +94,7 @@ namespace PracaMagisterska.Controllers
                 for (int i = 0; i < numOfTests; i++)
                 {
                     Stopwatch stopwatch = Stopwatch.StartNew();
-                    var test = new testHelper();
+                    var test = new testStringHelper();
                     arrayOfData = test.TestWithGroupBy(this.configuration);
                     stopwatch.Stop();
                     arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
@@ -108,7 +108,7 @@ namespace PracaMagisterska.Controllers
                 for (int i = 0; i < numOfTests; i++)
                 {
                     Stopwatch stopwatch = Stopwatch.StartNew();
-                    var test = new testHelper();
+                    var test = new testStringHelper();
                     arrayOfData = test.InsertTest(this.configuration);
                     stopwatch.Stop();
                     arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
@@ -144,6 +144,204 @@ namespace PracaMagisterska.Controllers
                 }
             }
 
+
+            if (testType == "6")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testStringHelper();
+                    arrayOfData = test.TestLeftJoin(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "7")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testStringHelper();
+                    arrayOfData = test.TestJoin(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "8")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testHelper();
+                    arrayOfData = test.TestJoinProcedure(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "9")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testHelper();
+                    arrayOfData = test.TestJoinProcedure(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+
+            if (testType == "10")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testStringHelper();
+                    arrayOfData = test.TestRandomSelect(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "11")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testHelper();
+                    arrayOfData = test.TestRandomSelectProcedure(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "12")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testStringHelper();
+                    arrayOfData = test.TestSelectWhereDate(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "13")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testHelper();
+                    arrayOfData = test.TestSelectWhereDateProcedure(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "14")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testStringHelper();
+                    arrayOfData = test.TestSelectWhereId(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "15")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testHelper();
+                    arrayOfData = test.TestSelectWhereId(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "16")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testStringHelper();
+                    arrayOfData = test.TestSelectJoinWhereId(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "17")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testHelper();
+                    arrayOfData = test.TestSelectJoinWhereId(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+
+            if (testType == "18")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testStringHelper();
+                    arrayOfData = test.TestRemove(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
+
+            if (testType == "17")
+            {
+                // create and start a Stopwatch instance
+
+                for (int i = 0; i < numOfTests; i++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    var test = new testHelper();
+                    arrayOfData = test.TestRemove(this.configuration);
+                    stopwatch.Stop();
+                    arrayOfTime.Add(stopwatch.ElapsedMilliseconds);
+                }
+            }
 
             string[] strArray = Array.ConvertAll(arrayOfTime.ToArray(), ele => ele.ToString());
 

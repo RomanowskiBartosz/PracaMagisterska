@@ -13,35 +13,6 @@ namespace PracaMagisterska.Models
         private readonly IConfiguration configuration;
                   
     
-        public List<string> test(IConfiguration config)
-        {
-            var configuration = config;
-            string connectionstring = configuration.GetConnectionString("defaultConnectionString");
-            List<string> abc = new List<string>();
-
-            SqlConnection conection = new SqlConnection(connectionstring);
-            conection.Open();
-            SqlCommand com = new SqlCommand("Select * from DEA_ORDERS", conection);
-            var reader = com.ExecuteReader();
-            while (reader.Read())
-            {
-                abc.Add(reader[0].ToString() + reader[1].ToString());
-                ReadSingleRow((IDataRecord)reader);
-            }
-
-            // Call Close when done reading.
-            reader.Close();
-
-            conection.Close();
-
-
-            var arrayOfData =new List<string>(abc.ToArray());
-
-
-
-            return arrayOfData;
-
-        }
 
         public List<string> TestProcedure(IConfiguration config)
         {
@@ -51,7 +22,7 @@ namespace PracaMagisterska.Models
 
             SqlConnection conection = new SqlConnection(connectionstring);
             conection.Open();
-            SqlCommand com = new SqlCommand("exec Select_from_orders", conection);
+            SqlCommand com = new SqlCommand("exec Select_from_tests", conection);
             var reader = com.ExecuteReader();
             while (reader.Read())
             {
@@ -67,44 +38,9 @@ namespace PracaMagisterska.Models
 
             var arrayOfData = new List<string>(abc.ToArray());
 
-
-
             return arrayOfData;
 
         }
-
-
-
-        public List<string> TestWithOrderBy(IConfiguration config)
-        {
-            var configuration = config;
-            string connectionstring = configuration.GetConnectionString("defaultConnectionString");
-            List<string> abc = new List<string>();
-
-            SqlConnection conection = new SqlConnection(connectionstring);
-            conection.Open();
-            SqlCommand com = new SqlCommand("Select * from DEA_ORDERS order by id_order", conection);
-            var reader = com.ExecuteReader();
-            while (reader.Read())
-            {
-                abc.Add(reader[0].ToString() + reader[1].ToString());
-                ReadSingleRow((IDataRecord)reader);
-            }
-
-            // Call Close when done reading.
-            reader.Close();
-
-            conection.Close();
-
-
-            var arrayOfData = new List<string>(abc.ToArray());
-
-
-
-            return arrayOfData;
-
-        }
-
 
         public List<string> TestWithOrderByProcedure(IConfiguration config)
         {
@@ -126,20 +62,12 @@ namespace PracaMagisterska.Models
             reader.Close();
 
             conection.Close();
-
-
             var arrayOfData = new List<string>(abc.ToArray());
-
-
-
             return arrayOfData;
 
         }
 
-
-
-
-        public List<string> TestWithGroupBy(IConfiguration config)
+        public List<string> TestLeftJoinProcedure(IConfiguration config)
         {
             var configuration = config;
             string connectionstring = configuration.GetConnectionString("defaultConnectionString");
@@ -147,7 +75,7 @@ namespace PracaMagisterska.Models
 
             SqlConnection conection = new SqlConnection(connectionstring);
             conection.Open();
-            SqlCommand com = new SqlCommand("Select CardCode,create_date from DEA_ORDERS group by CardCode,create_date", conection);
+            SqlCommand com = new SqlCommand("exec [Select_left_join]", conection);
             var reader = com.ExecuteReader();
             while (reader.Read())
             {
@@ -159,41 +87,21 @@ namespace PracaMagisterska.Models
             reader.Close();
 
             conection.Close();
-
-
             var arrayOfData = new List<string>(abc.ToArray());
-
-
-
             return arrayOfData;
 
         }
 
-        public List<string> InsertTest(IConfiguration config)
+
+        public List<string> TestJoinProcedure(IConfiguration config)
         {
             var configuration = config;
-
             string connectionstring = configuration.GetConnectionString("defaultConnectionString");
             List<string> abc = new List<string>();
+
             SqlConnection conection = new SqlConnection(connectionstring);
             conection.Open();
-
-            SqlCommand com = new SqlCommand("insert into DEA_ORDERS(sent_to_sap_id_package,ordr_docentry,CardCode,customer_order_number,pdf_filename) values " +
-                "(@sent_to_sap_id_package,@ordr_docentry,@CardCode,@customer_order_number,@pdf_filename)", conection);
-
-            SqlParameter[] param = new SqlParameter[5];
-            param[0] = new SqlParameter("@sent_to_sap_id_package", RandomString(10));
-            param[1] = new SqlParameter("@ordr_docentry", RandomString(10));
-            param[2] = new SqlParameter("@CardCode", RandomString(10));
-            param[3] = new SqlParameter("@customer_order_number", RandomString(10));
-            param[4] = new SqlParameter("@pdf_filename", RandomString(10));
-            com.Parameters.Add(param[0]);
-            com.Parameters.Add(param[1]);
-            com.Parameters.Add(param[2]);
-            com.Parameters.Add(param[3]);
-            com.Parameters.Add(param[4]);
-
-         
+            SqlCommand com = new SqlCommand("exec Select_join", conection);
             var reader = com.ExecuteReader();
             while (reader.Read())
             {
@@ -204,16 +112,196 @@ namespace PracaMagisterska.Models
             // Call Close when done reading.
             reader.Close();
 
-        
-
-
+            conection.Close();
             var arrayOfData = new List<string>(abc.ToArray());
-
-
-
             return arrayOfData;
 
         }
+
+
+        public List<string> TestRandomSelectProcedure(IConfiguration config)
+        {
+            var configuration = config;
+            string connectionstring = configuration.GetConnectionString("defaultConnectionString");
+            List<string> abc = new List<string>();
+
+            SqlConnection conection = new SqlConnection(connectionstring);
+            conection.Open();
+            SqlCommand com = new SqlCommand("exec [Select_random_join] @id", conection);
+            SqlParameter[] param = new SqlParameter[6];
+            param[0] = new SqlParameter("@id", RandomInt(5));
+            com.Parameters.Add(param[0]);
+
+            var reader = com.ExecuteReader();
+            while (reader.Read())
+            {
+                abc.Add(reader[0].ToString() + reader[1].ToString());
+                ReadSingleRow((IDataRecord)reader);
+            }
+
+            // Call Close when done reading.
+            reader.Close();
+
+            conection.Close();
+            var arrayOfData = new List<string>(abc.ToArray());
+            return arrayOfData;
+
+        }
+
+
+        public List<string> TestSelectNullProcedure(IConfiguration config)
+        {
+            var configuration = config;
+            string connectionstring = configuration.GetConnectionString("defaultConnectionString");
+            List<string> abc = new List<string>();
+
+            SqlConnection conection = new SqlConnection(connectionstring);
+            conection.Open();
+            SqlCommand com = new SqlCommand("exec selectNull id=@id", conection);
+            SqlParameter[] param = new SqlParameter[6];
+            param[0] = new SqlParameter("@id", RandomInt(5));
+            com.Parameters.Add(param[0]);
+
+            var reader = com.ExecuteReader();
+            while (reader.Read())
+            {
+                abc.Add(reader[0].ToString() + reader[1].ToString());
+                ReadSingleRow((IDataRecord)reader);
+            }
+
+            // Call Close when done reading.
+            reader.Close();
+
+            conection.Close();
+            var arrayOfData = new List<string>(abc.ToArray());
+            return arrayOfData;
+
+        }
+
+        public List<string> TestSelectWhereDateProcedure(IConfiguration config)
+        {
+            var configuration = config;
+            string connectionstring = configuration.GetConnectionString("defaultConnectionString");
+            List<string> abc = new List<string>();
+
+            SqlConnection conection = new SqlConnection(connectionstring);
+            conection.Open();
+            SqlCommand com = new SqlCommand("exec selectDate @date", conection);
+
+            SqlParameter[] param = new SqlParameter[6];
+            param[0] = new SqlParameter("@date", RandomTime());
+            com.Parameters.Add(param[0]);
+
+
+            var reader = com.ExecuteReader();
+            while (reader.Read())
+            {
+                abc.Add(reader[0].ToString() + reader[1].ToString());
+                ReadSingleRow((IDataRecord)reader);
+            }
+
+            // Call Close when done reading.
+            reader.Close();
+
+            conection.Close();
+            var arrayOfData = new List<string>(abc.ToArray());
+            return arrayOfData;
+
+        }
+
+        public List<string> TestSelectWhereId(IConfiguration config)
+        {
+            var configuration = config;
+            string connectionstring = configuration.GetConnectionString("defaultConnectionString");
+            List<string> abc = new List<string>();
+
+            SqlConnection conection = new SqlConnection(connectionstring);
+            conection.Open();
+            SqlCommand com = new SqlCommand("exec selectId @id", conection);
+
+            SqlParameter[] param = new SqlParameter[6];
+            param[0] = new SqlParameter("@id", RandomInt(32000));
+            com.Parameters.Add(param[0]);
+
+            var reader = com.ExecuteReader();
+            while (reader.Read())
+            {
+                abc.Add(reader[0].ToString() + reader[1].ToString());
+                ReadSingleRow((IDataRecord)reader);
+            }
+
+            // Call Close when done reading.
+            reader.Close();
+
+            conection.Close();
+            var arrayOfData = new List<string>(abc.ToArray());
+            return arrayOfData;
+
+        }
+
+
+        public List<string> TestSelectJoinWhereId(IConfiguration config)
+        {
+            var configuration = config;
+            string connectionstring = configuration.GetConnectionString("defaultConnectionString");
+            List<string> abc = new List<string>();
+
+            SqlConnection conection = new SqlConnection(connectionstring);
+            conection.Open();
+            SqlCommand com = new SqlCommand("exec selectJoinSelect @intRow", conection);
+
+            SqlParameter[] param = new SqlParameter[6];
+            param[0] = new SqlParameter("@intRow", RandomInt(32000));
+            com.Parameters.Add(param[0]);
+
+            var reader = com.ExecuteReader();
+            while (reader.Read())
+            {
+                abc.Add(reader[0].ToString() + reader[1].ToString());
+                ReadSingleRow((IDataRecord)reader);
+            }
+
+            // Call Close when done reading.
+            reader.Close();
+
+            conection.Close();
+            var arrayOfData = new List<string>(abc.ToArray());
+            return arrayOfData;
+
+        }
+
+
+        public List<string> TestRemove(IConfiguration config)
+        {
+            var configuration = config;
+            string connectionstring = configuration.GetConnectionString("defaultConnectionString");
+            List<string> abc = new List<string>();
+
+            SqlConnection conection = new SqlConnection(connectionstring);
+            conection.Open();
+            SqlCommand com = new SqlCommand("exec remove @id", conection);
+
+
+            SqlParameter[] param = new SqlParameter[6];
+            param[0] = new SqlParameter("@id", RandomInt(32000));
+            com.Parameters.Add(param[0]);
+
+            var reader = com.ExecuteReader();
+            while (reader.Read())
+            {
+                abc.Add(reader[0].ToString() + reader[1].ToString());
+                ReadSingleRow((IDataRecord)reader);
+            }
+
+            // Call Close when done reading.
+            reader.Close();
+
+            conection.Close();
+            var arrayOfData = new List<string>(abc.ToArray());
+            return arrayOfData;
+
+        }
+
 
         public static string RandomString(int length)
         {
@@ -227,6 +315,39 @@ namespace PracaMagisterska.Models
         private static void ReadSingleRow(IDataRecord dataRecord)
         {
             Console.WriteLine(String.Format("{0}", dataRecord[0]));
+        }
+
+        public static int RandomInt(int length)
+        {
+            Random random = new Random();
+            return random.Next(length) + 1;
+        }
+
+        public static int RandomBool(int length)
+        {
+            Random random = new Random();
+            return (random.Next(1) % 2);
+        }
+
+        public static float RandomFloat(int length)
+        {
+            Random rand = new Random();
+            float randomFloat = (float)rand.NextDouble();
+            return (randomFloat);
+        }
+
+        public static DateTime RandomTime()
+        {
+            Random rnd = new Random();
+            DateTime datetoday = DateTime.Now;
+
+            int rndYear = rnd.Next(1995, datetoday.Year);
+            int rndMonth = rnd.Next(1, 12);
+            int rndDay = rnd.Next(1, 30);
+
+            DateTime generateDate = new DateTime(rndYear, rndMonth, rndDay);
+
+            return generateDate;
         }
     }
 }

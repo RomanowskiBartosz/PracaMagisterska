@@ -6,8 +6,8 @@
 
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Testy łącza SQL string</h1>
+ 
 </div>
 <h3> Run tests for db</h3>
 <div>
@@ -20,34 +20,63 @@
         <option value="3">Insert into random values</option>
         <option value="4">select procedure</option>
         <option value="5">select order by procedure</option>
-    </select>
-    <label for="numOfTests">Number of tests to run.</label>
-    <input type="number" id="numOfTests" value="1"/>
-    <input type="button" id="runTest" value="Run test"/>
+        <option value="6">select left join </option>
+        <option value="7">select join </option>
 
+        <option value="8">select left join Proc </option>
+        <option value="9">select join Proc</option>
+
+        <option value="10">select random </option>
+        <option value="11">select random Proc</option>
+
+        <option value="10">select with null </option>
+        <option value="11">select with null Proc</option>
+
+        <option value="12">select where date </option>
+        <option value="13">select where date Proc</option>
+
+        <option value="14">select where id </option>
+        <option value="15">select where id Proc</option>
+
+        <option value="16">select with join where </option>
+        <option value="17">select with join where Proc</option>
+
+        <option value="18">remove </option>
+        <option value="19">remove Proc</option>
+    </select>
+
+
+
+    <label for="numOfTests">Number of tests to run.</label>
+    <input type="number" id="numOfTests" value="1" />
+    <input type="button" id="runTest" value="Run test" />
+  
 </div>
 <div id="resultsContainer">
     @ViewData["total"]
     @model string[]
     <ul>
-        @if(Model !=null)
+        @if (Model != null)
         {
-        @foreach (var row in Model)
-        {
-            <li>@row</li>
-        }
+            @foreach (var row in Model)
+            {
+                <li>@row</li>
+            }
         }
     </ul>
+    <table id="resultTable"><th style='text-align: center'> time taken</th> <th style='text-align: center'>Result</th></table>
 </div>
 @section Scripts{
     <script>
 
         $(function () {
+           
+            $("#runTest").click(function () {
             var num = $("#numOfTests").val();
             console.log(num);
             //$("#numOfTests").val()
-            for (let i = 0; i < num; i++) {
-                $("#runTest").click(function () {
+            for (let i = 0; i < parseInt(num); i++) {
+              
                     $.ajax({
                         type: "Get",
                         url: "/Home/RunTest?testType=" + $("#testType").val() + "&numOfTests=" + 1,
@@ -57,17 +86,18 @@
 
                             if (data.arrayOfData != null)
                                 createTableOfResults(data.arrayOfData, data.time);
-                            download(data.csvFile, 'test.csv', 'text/csv;encoding:utf-8');
+                            //download(data.csvFile, 'test.csv', 'text/csv;encoding:utf-8');
                         },
                         error: function (response) {
                             console.log(response.responseText);
                         }
                     });
-                });
-            }
+              
+                }
+            });
         });
         function createTableOfResults(data, timeElapsed) {
-            let jsString = "<table><th style='text-align: center'> time taken</th> <th style='text-align: center'>Result</th>";
+            let jsString = "";
             for (i in timeElapsed) {
                 jsString += "<tr><td>" + timeElapsed[i] + " ms </td>";
                 jsString += "<td><table>";
@@ -79,8 +109,8 @@
                 }
                 jsString += "</table></td></tr>"
             }
-            jsString += "</table>"
-            $("#resultsContainer").html(jsString);
+
+            $("#resultTable").append(jsString);
         }
 
 

@@ -14,6 +14,8 @@ namespace PracaMagisterska.Data
         {
         }
 
-        public DbSet<PracaMagisterska.Models.TS_price_PRICELIST_ACTIONS> TS_price_PRICELIST_ACTIONS { get; set; }
+        public DbSet<PracaMagisterska.Models.tests> testTable { get; set; }
+        public DbSet<PracaMagisterska.Models.testWithForeignKey> foreign1 {get; set; }
+        public DbSet<PracaMagisterska.Models.testWithForeignKey> foreign2 { get; set; }
     }
 }
